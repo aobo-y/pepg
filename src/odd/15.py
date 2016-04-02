@@ -3,17 +3,27 @@ y = 0
 destX = 20
 destY = 20
 
-def makeAMove(x, y, destX, destY):
-    print(str(x) + " " + str(y))
-    if x == destX and y == destY:
+storage = []
+
+for i in range(0, destX + 1):
+    storage.append([])
+    for j in range(0, destY + 1):
+        storage[i].append(0);
+
+def numberOfRountes(x, y, destX, destY):
+    global storage
+
+    if x == destX or y == destY:
         return 1
 
-    routes = 0
-    if x < destX:
-        routes += makeAMove(x + 1, y, destX, destY)
-    if y < destY:
-        routes += makeAMove(x, y + 1, destX, destY)
+    if storage[x][y] != 0:
+        return storage[x][y]
+
+    routes = numberOfRountes(x + 1, y, destX, destY) + numberOfRountes(x, y + 1, destX, destY)
+
+    storage[x][y] = routes
     return routes
 
-routes = makeAMove(x, y, destX, destY)
+routes = numberOfRountes(x, y, destX, destY)
+print(storage)
 print(routes)
